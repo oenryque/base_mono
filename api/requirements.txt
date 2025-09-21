@@ -1,6 +1,6 @@
 # API Flask - Dependências de Produção
-flask>=3.0.0
-flask-sqlalchemy>=3.1.0
+flask>=2.3.0
+flask-sqlalchemy>=3.0.0
 flask-migrate>=4.0.0
 flask-jwt-extended>=4.6.0
 flask-cors>=4.0.0
@@ -14,7 +14,7 @@ gunicorn>=21.2.0
 python-dotenv>=1.0.0
 bcrypt>=4.1.0
 email-validator>=2.1.0
-pydantic>=2.5.0
+pydantic>=2.0.0
 
 # Dependências de Desenvolvimento (opcional)
 pytest>=7.4.0

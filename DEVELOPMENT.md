@@ -19,7 +19,7 @@ Este guia fornece instruções detalhadas para desenvolvedores que trabalham com
 ### Pré-requisitos
 
 - **Node.js** 18.0+ ([Download](https://nodejs.org/))
-- **Python** 3.11+ ([Download](https://python.org/))
+- **Python** 3.10+ ([Download](https://python.org/))
 - **Git** ([Download](https://git-scm.com/))
 - **Docker** 20.0+ (opcional, mas recomendado)
 

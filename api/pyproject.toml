@@ -10,18 +10,19 @@ authors = [
     {name = "Sua Equipe", email = "dev@example.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
 ]
 dependencies = [
-    "flask>=3.0.0",
-    "flask-sqlalchemy>=3.1.0",
+    "flask>=2.3.0",
+    "flask-sqlalchemy>=3.0.0",
     "flask-migrate>=4.0.0",
     "flask-jwt-extended>=4.6.0",
     "flask-cors>=4.0.0",
@@ -35,7 +36,7 @@ dependencies = [
     "python-dotenv>=1.0.0",
     "bcrypt>=4.1.0",
     "email-validator>=2.1.0",
-    "pydantic>=2.5.0",
+    "pydantic>=2.0.0",
     "zod>=0.0.0",  # Será instalado via pip
 ]
 
@@ -63,7 +64,7 @@ include = ["app*"]
 
 [tool.black]
 line-length = 88
-target-version = ['py311']
+target-version = ['py310']
 include = '\.pyi?$'
 extend-exclude = '''
 /(
@@ -86,7 +87,7 @@ line_length = 88
 known_first_party = ["app"]
 
 [tool.mypy]
-python_version = "3.11"
+python_version = "3.10"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true

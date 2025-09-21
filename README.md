@@ -3,7 +3,7 @@
 **Template Base para Projetos Full-Stack** - Monorepo completo com API Flask e Client React
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.11+-blue.svg)](https://python.org)
+[![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://python.org)
 [![Node.js](https://img.shields.io/badge/node.js-18+-green.svg)](https://nodejs.org)
 [![React](https://img.shields.io/badge/react-18+-61dafb.svg)](https://reactjs.org)
 [![TypeScript](https://img.shields.io/badge/typescript-5.0+-3178c6.svg)](https://typescriptlang.org)
@@ -237,7 +237,7 @@ monorepo-template/
 
 ### Obrigatórios
 - **Node.js** 18.0+ ([Download](https://nodejs.org/))
-- **Python** 3.11+ ([Download](https://python.org/))
+- **Python** 3.10+ ([Download](https://python.org/))
 - **Git** ([Download](https://git-scm.com/))
 
 ### Opcionais (Recomendados)
