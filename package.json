@@ -1,0 +1,47 @@
+{
+  "name": "monorepo-template",
+  "version": "1.0.0",
+  "description": "Template Base para Projetos Full-Stack - Monorepo completo com API Flask e Client React",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "client"
+  ],
+  "scripts": {
+    "setup": "npm install && npm run setup:contracts && npm run setup:client && npm run setup:api",
+    "setup:contracts": "cd packages/contracts && npm install",
+    "setup:client": "cd client && npm install",
+    "setup:api": "cd api && pip install -e .",
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:client\"",
+    "dev:api": "cd api && python manage.py run",
+    "dev:client": "cd client && npm run dev",
+    "build": "npm run build:contracts && npm run build:client",
+    "build:contracts": "cd packages/contracts && npm run build",
+    "build:client": "cd client && npm run build",
+    "test": "npm run test:client",
+    "test:client": "cd client && npm run test",
+    "lint": "npm run lint:client",
+    "lint:client": "cd client && npm run lint",
+    "clean": "npm run clean:client && npm run clean:api",
+    "clean:client": "cd client && rm -rf dist node_modules/.vite",
+    "clean:api": "cd api && find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "keywords": [
+    "monorepo",
+    "template",
+    "flask",
+    "react",
+    "typescript",
+    "fullstack",
+    "docker"
+  ],
+  "author": "Sua Equipe",
+  "license": "MIT"
+}

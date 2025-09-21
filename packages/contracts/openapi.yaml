@@ -1,0 +1,301 @@
+openapi: 3.0.3
+info:
+  title: Monorepo Template API
+  description: API para o template de monorepo com autenticação de desenvolvedores/administradores
+  version: 1.0.0
+  contact:
+    name: Sua Equipe
+    email: dev@example.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:8000/api/v1
+    description: Servidor de desenvolvimento
+  - url: https://api.example.com/api/v1
+    description: Servidor de produção
+
+paths:
+  /health:
+    get:
+      tags:
+        - Health
+      summary: Health check
+      description: Verifica o status da API
+      responses:
+        '200':
+          description: API funcionando
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "ok"
+                  timestamp:
+                    type: string
+                    format: date-time
+                  version:
+                    type: string
+                    example: "1.0.0"
+
+  /auth/login:
+    post:
+      tags:
+        - Autenticação
+      summary: Login de desenvolvedor/administrador
+      description: Autentica um desenvolvedor ou administrador no sistema
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "dev@example.com"
+                password:
+                  type: string
+                  minLength: 6
+                  example: "password123"
+      responses:
+        '200':
+          description: Login realizado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                  refresh_token:
+                    type: string
+                  token_type:
+                    type: string
+                    example: "Bearer"
+                  expires_in:
+                    type: integer
+                    example: 3600
+        '401':
+          description: Credenciais inválidas
+        '422':
+          description: Dados de entrada inválidos
+
+  /auth/register:
+    post:
+      tags:
+        - Autenticação
+      summary: Registro de desenvolvedor/administrador
+      description: Registra um novo desenvolvedor ou administrador
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+                - name
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "dev@example.com"
+                password:
+                  type: string
+                  minLength: 8
+                  example: "password123"
+                name:
+                  type: string
+                  minLength: 2
+                  example: "João Silva"
+                role:
+                  type: string
+                  enum: [admin, developer]
+                  default: developer
+                  example: "developer"
+      responses:
+        '201':
+          description: Usuário criado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  email:
+                    type: string
+                    format: email
+                  name:
+                    type: string
+                  role:
+                    type: string
+                  status:
+                    type: string
+                  created_at:
+                    type: string
+                    format: date-time
+        '400':
+          description: Email já existe
+        '422':
+          description: Dados de entrada inválidos
+
+  /auth/me:
+    get:
+      tags:
+        - Autenticação
+      summary: Dados do usuário atual
+      description: Retorna os dados do usuário autenticado
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Dados do usuário
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  email:
+                    type: string
+                    format: email
+                  name:
+                    type: string
+                  role:
+                    type: string
+                  status:
+                    type: string
+                  is_active:
+                    type: boolean
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+        '401':
+          description: Token inválido ou expirado
+
+  /users:
+    get:
+      tags:
+        - Usuários
+      summary: Listar usuários
+      description: Lista todos os usuários (apenas para admins)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: role
+          in: query
+          schema:
+            type: string
+            enum: [admin, developer, user]
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, inactive, pending, suspended]
+      responses:
+        '200':
+          description: Lista de usuários
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        email:
+                          type: string
+                          format: email
+                        name:
+                          type: string
+                        role:
+                          type: string
+                        status:
+                          type: string
+                        is_active:
+                          type: boolean
+                        created_at:
+                          type: string
+                          format: date-time
+                        updated_at:
+                          type: string
+                          format: date-time
+                  pagination:
+                    type: object
+                    properties:
+                      page:
+                        type: integer
+                      per_page:
+                        type: integer
+                      total:
+                        type: integer
+                      pages:
+                        type: integer
+        '401':
+          description: Token inválido ou expirado
+        '403':
+          description: Acesso negado
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+
+    Success:
+      type: object
+      properties:
+        success:
+          type: boolean
+          default: true
+        message:
+          type: string
+        data:
+          type: object
